@@ -14,7 +14,7 @@ import { View, text, ScrollView, FlatList, pressable, StyleSheet} from "react-na
 import { useRouter } from "expo-router";
 // acesso ao objeto router, tem a função de navegação baseada em arquivos (biblioteca).
 
-import GameCard from "../components/GameCard"
+import GameCard from "../components/GameCard.js"
 // Reutilizar componentes, isso evita duolicação codigo e mantem a consistencia visual.
 
 import { jogos } from "../data/jogos";
@@ -67,9 +67,88 @@ export default function Inicio(){
 
         //--------------------------------------
         // BLOCO 2.2 - SEÇÃO "MAIS POPULARES"
-        // -------------------------------------    
+        // ------------------------------------- 
+        {/* Mesma estrutura da seção */}
 
-        
+        <text style={styles.secaoTitulo}>Mais Populares</text>
+        {/* Título da segunda seção, reaproveitando o mesmo estilo "Seção Título" */}
+
+        <FlatList
+        dtata={populares}
+        // Desta vez a fonte de dados é o array "populares" (top 5 por nota)
+        keyExtractor={(item) => item.id}
+        // Mesma lógica de chave única no id do Jogo
+        horizontal
+        // Lista horizontal, igual a seção anterior
+        showsHorizontalScrollIndicator={false}
+        // Esconder o indicador de rolagem
+        renderItem={({item}) => <GameCard jogo={item} />}
+        // Reutiliza o mesmo componente GameCard, provando que ele funciona com qualquer lista de jogos! 
+        />   
+
+        //--------------------------------------
+        // BLOCO 2.3 - BOTÃO "VER TODOS OS JOGOS"
+        // -------------------------------------
+        {/* Pressable oferece mais controle sobre o estilo e feedback visual */}
+        <pressable
+            style={styles.botao}
+            // Aplica o estilo visual do botão!
+            onPress={() => router.push("./jogos")}
+            //onPress: Função executada quando o usuário toca no botão
+            // router.push("/jogos") navega para a rota "/jogos"
+        >
+            <text style={styles.textobotao}>Ver todos os Jogos</text>
+
+        </pressable>
+
+        //--------------------------------------
+        // BLOCO 3 - 
+        // -------------------------------------
+
+        //PORQUE USAR StyleSheet
+        // - StyleSheet.create 
+
+        const styles = StyleSheet.create ({
+            container: {
+                flex: 1,
+                backgroundColor: cores.fundo,
+            },
+            conteudo: {
+                padding: 20,
+                paddingBottom: 40,
+            },
+            titulo: {
+                fontSize: 32,
+                fontWeight: "bold",
+                color: cores.textoPrincipal,
+            },
+            subtitulo: {
+                fontSize: 15;
+                color: cores.textoSecundario,
+                marginTop: 4,
+                marginBottom: 24,
+            }
+            secaTitulo: {
+                fontSize: 18,
+                fontWeight: "bold",
+                color: cores.textoPrincipal,
+                marginTop: 8,
+                marginBottom: 12,  
+            },
+            botao: {
+                backgroundColor: cores.roxo,
+                borderRadius: 12,
+                paddingVertical: 14,
+                alignItems: "center",
+                marginTop: 24,
+            },
+            textoBotao: {
+                color: cores.textoPrincipal,
+                fontSize: 16,
+                fontWeight: "bold",
+            }
+
+        })
         
         </ScrollView>
 
